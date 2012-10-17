@@ -1,72 +1,59 @@
 #include "testApp.h"
-#include "ofMain.h"
 
 //--------------------------------------------------------------
 void testApp::setup(){
-	
-	ofSetVerticalSync(true);
+
 	ofBackground(0, 0, 0, 255);
-	
-	for (int i=0; i<1000; i++) {
-		circle myCircle;
-		myCircle.posa.x = 0;
-		myCircle.posa.y = 100;
-		myCircle.posb.x = ofGetWidth();
-		myCircle.posb.y = 100;
-		circles.push_back(myCircle);
-		myCircle.interpolateByPct(0);
-		pcts.push_back(ofRandom(.1));
+	ofSetVerticalSync(true);
+	for(int i=0; i<300; i++){
+		circle newCircle;
+		circles.push_back(newCircle);
 	}
-	
-	
-	clickCounter = 0;
-	
-	text.set(100, 100);
 }
 
 //--------------------------------------------------------------
 void testApp::update(){
 	
-	for (int i=0; i<pcts.size(); i++) {
-		pcts[i]+= .01;
-		if (pcts[i]>1) pcts[i]=0;
-		circles[i].interpolateByPct(pcts[i]);
+	circles[0].xenoTo(mouseX,mouseY);
+	for (int i=1; i<circles.size(); i++) {
+		circles[i].xenoTo(circles[i-1].pos.x,circles[i-1].pos.y);
 	}
-	
 }
 
 //--------------------------------------------------------------
 void testApp::draw(){
-
-	for (int i=0; i<circles.size(); i++) {
+	
+	//ofSetColor(100, 255, 255);
+	//circles[0].draw();
+	//ofSetColor(0, 255, 100);
+	ofSetLineWidth(3);
+	ofEnableSmoothing();
+	int i = 1;
+	while (i<circles.size()-1) {
+		ofSetColor(ofMap(mouseX, 0, ofGetWidth(), 0, 255, true), ofMap(mouseY, 0, ofGetHeight(), 0, 255, true), ofMap(i, 0, circles.size(), 0, 255, true));
+		
 		circles[i].draw();
+		ofLine(circles[i].pos.x, circles[i].pos.y, circles[i+1].pos.x, circles[i+1].pos.y);
+		i++;
 	}
+		
 
 }
 
 //--------------------------------------------------------------
 void testApp::keyPressed(int key){
 
-	
-	if (key == OF_KEY_UP) {
-		for (int i=0; i<pcts.size(); i++) {
-			pcts[i] += .1;
-		}
-	} else if (key == OF_KEY_DOWN) {
-		for (int i=0; i<pcts.size(); i++) {
-			pcts[i] -= .1;
-		}
-	} 
-	
 }
 
 //--------------------------------------------------------------
 void testApp::keyReleased(int key){
+
 }
 
 //--------------------------------------------------------------
 void testApp::mouseMoved(int x, int y){
-
+	
+	
 }
 
 //--------------------------------------------------------------
@@ -76,27 +63,12 @@ void testApp::mouseDragged(int x, int y, int button){
 
 //--------------------------------------------------------------
 void testApp::mousePressed(int x, int y, int button){
-	
-	clickCounter++;
+
 }
 
 //--------------------------------------------------------------
 void testApp::mouseReleased(int x, int y, int button){
 
-	if (clickCounter%2 == 0) {
-		for (int i=0; i<circles.size(); i++) {
-			circles[i].posb.x = x;
-			circles[i].posb.y = y;
-		}
-		
-	} else {
-		for (int i=0; i<circles.size(); i++) {
-			circles[i].posa.x = x;
-			circles[i].posa.y = y;
-		}
-	}
-
-	
 }
 
 //--------------------------------------------------------------

@@ -19,11 +19,16 @@ class testApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
 		
-		circle myCircle;
-		int clickCounter;
+		
+		void addCircle();
+		void eraseCircle();
+		
+		int nums, upKeyCounter;
+		float r;
+		ofPoint text;
 		
 		vector <circle> circles;
-		vector <float> pcts;
 	
-	ofPoint text;
+		bool newCircleAdded, circleErased;
+	
 };

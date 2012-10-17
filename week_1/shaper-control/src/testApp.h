@@ -1,7 +1,7 @@
 #pragma once
 
 #include "ofMain.h"
-#include "circle.h"
+#include "shape.h"
 
 class testApp : public ofBaseApp{
 	public:
@@ -18,12 +18,13 @@ class testApp : public ofBaseApp{
 		void windowResized(int w, int h);
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
-		
-		circle myCircle;
-		int clickCounter;
-		
-		vector <circle> circles;
-		vector <float> pcts;
+
+		vector <shape> shapes;
+		vector <float> catchups;
+		vector <float> radii;
 	
-	ofPoint text;
+		bool showShape, showNet;
+		
+		ofPoint text;
 };
+
